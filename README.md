@@ -39,3 +39,4 @@ docker image の作成:
 
 ## License
 
+[MITライセンス](https://github.com/usamillc/taggable?tab=MIT-1-ov-file)にて公開しています。
