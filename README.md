@@ -17,7 +17,9 @@ Taggable は Ruby 2.6、Rails 5 にて開発・運用されました。それ以
 
 1. この repository を clone
 
-    $ git clone https://github.com/usamillc/taggable.git
+```
+$ git clone https://github.com/usamillc/taggable.git
+```
 
 2. bundle install
 
