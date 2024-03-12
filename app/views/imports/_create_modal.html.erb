@@ -1,0 +1,32 @@
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">アノテーションツールへのインポート</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with(model: @import, local: true, url: imports_path(@category)) do |form| %>
+        <div class="modal-body">
+          カテゴリ <b><%= @category.screenname %>（<%= @category.name %>）</b> のアノテーションタスクをインポートできます。インポート用ファイル (csv) をアップロードしてください。インポート完了までにはしばらく時間がかかります。
+          <br>
+          （この操作を取り消す場合は右上の&times;をクリックしてください。）
+          <%= form.hidden_field :category_id, value: @category.id %>
+          <%= form.hidden_field :annotator_id, value: current_annotator.id %>
+
+          <hr>
+
+          <div class="form-group row">
+            <%= form.label 'インポートファイル (csv)', class: 'col-sm-5 col-form-label' %>
+            <%= form.file_field :list, class: 'col-sm-6' %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <%= form.submit 'インポート開始', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

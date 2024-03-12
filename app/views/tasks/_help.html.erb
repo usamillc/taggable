@@ -1,0 +1,111 @@
+<!-- Help Modal -->
+<div class="modal fade" id="help" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title">作業画面のヘルプ</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>ショートカットキー</h6>
+        <p>作業画面中はキーボードから、以下のショートカットキーが使えます。</p>
+        <ul class="list-unstyled">
+          <li>
+            <dt><kbd>z</kbd>または<kbd>m</kbd></dt>
+            <dd>
+            画面右のサイドバーで選択された属性名のタグを本文画面の選択された部分に付与します。詳しい使い方は<em>タグ付けの方法</em>を参照してください。
+            </dd>
+          </li>
+          <li>
+            <dt><kbd>d</kbd></dt>
+            <dd>
+            本文画面の選択されたタグを削除します。詳しい使い方は<em>タグを消す方法</em>を参照してください。
+            </dd>
+          </li>
+        </ul>
+
+        <hr>
+
+        <h6>タグ付けの方法</h6>
+        <p>
+        タグ付けは画面左に表示される対象文章の本文画面に行います。
+        タグを付けたい部分をマウスの<kbd>左クリック+ドラッグ</kbd>で範囲選択します。
+        その後に<kbd>右クリック</kbd>でメニューを表示し、付けたい属性名を選択します。
+        もしくは、画面右のサイドバーからタグを付けたい属性名を選択し、ショートカットキーの<kbd>z</kbd>か<kbd>m</kbd>を押すことでタグを付けることができます。
+        一度タグを付けた属性値は本文画面で<mark>ハイライト表示</mark>することができます。このハイライト表示されている部分を<kbd>左クリック</kbd>で選択し、ショートカットキー<kbd>z</kbd>か<kbd>m</kbd>を押すことでもタグを付けることができます。
+        </p>
+
+        <hr>
+
+        <h6>タグを消す方法</h6>
+        消したいタグの上にマウスカーソルを持っていき、<kbd>右クリック</kbd>でメニューを表示します。
+        そこで「このタグを消去」を選択すると、対象のタグを消すことができます。
+        また、消したいタグを<kbd>左クリック</kbd>で選択し、ショートカットキー<kbd>d</kbd>を押すことでもタグを消すことができます。
+        もし、直前に付けたタグを消したい場合は、画面上部のバーにある戻るボタンを利用することもできます。
+        詳しい使い方は<em>バーボタン</em>を参照してください。
+
+        <hr>
+
+        <h6>バーボタン</h6>
+        <p>画面上部のバーにあるボタンで以下の操作が行えます。</p>
+
+        <ul class="list-unstyled">
+          <li>
+            <dt>
+              <button class="btn btn-light"><%= octicon('arrow-left') %></button> 戻る
+            </dt>
+            <dd>
+            一つ前の状態に戻ります。直前にタグを付けた場合は、タグが消えます。反対に、タグを消していた場合は、タグが元にもどります。
+            </dd>
+          </li>
+          <li>
+            <dt>
+              <button class="btn btn-light"><%= octicon('arrow-right') %></button> 進む
+            </dt>
+            <dd>
+            一つ先の状態に進みます。戻るボタンで戻す前の状態まで復元することができます。
+            </dd>
+          </li>
+          <li>
+            <dt>
+              <button class="btn btn-light"><%= octicon('code') %> タグ非表示</button>
+              <button class="btn btn-light"><%= octicon('code') %> タグ表示</button>
+            </dt>
+            <dd>
+            付けたタグを非表示にしたり、表示する状態に戻したりできます。非表示にしても、付けたタグが消えるわけではありません。
+            </dd>
+          </li>
+          <li>
+            <dt>
+              <button class="btn btn-light"><%= octicon('light-bulb') %> ハイライト非表示</button>
+            </dt>
+            <dd>
+            全てのハイライト表示を消すことができます。再度ハイライト表示をしたい場合は、画面右のサイドバーよりハイライト表示したい属性名もしくは属性値のチェックボックスを選択してください。
+            </dd>
+          </li>
+          <li>
+            <dt>
+              <button class="btn btn-primary">中断して一覧へ</button>
+            </dt>
+            <dd>
+            作業を一時中断して、作業一覧の画面へ戻ることができます。それまでの作業は自動で保存されていますので、自由に中断・再開をすることができます。
+            </dd>
+          </li>
+          <li>
+            <dt>
+              <button class="btn btn-success">作業完了</button>
+            </dt>
+            <dd>
+            作業を完了状態にします。完了済みにした作業でも、いつでも再作業することができます。
+            </dd>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>

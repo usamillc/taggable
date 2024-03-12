@@ -1,0 +1,119 @@
+<script type="text/javascript">
+  jQuery.query = { numbers: false };
+</script>
+<%= javascript_include_tag 'jquery.query-object.js' %>
+<%= javascript_include_tag 'jquery.mCustomScrollbar.concat.min.js' %>
+<%= javascript_include_tag 'pages.js' %>
+
+<%= render 'help' %>
+
+<nav class="navbar fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Taggable</a>
+  <div class="container">
+    <div class="navbar-nav">
+      <div class="nav-item">
+        <% btn = 'btn-light' %>
+        <button id="undo" class="btn <%= btn %>" onclick="undo()" <%= undo_disabled? @task %>><%= octicon('arrow-left') %></button>
+        <button id="redo" class="btn <%= btn %>" onclick="redo()" <%= redo_disabled? @task %>><%= octicon('arrow-right') %></button>
+        <% unless @plain_view %>
+          <button class="btn <%= btn %>" onclick="toggleView(true)"><%= octicon('code') %> タグ非表示</button>
+        <% else %>
+          <button class="btn <%= btn %>" onclick="toggleView(false)"><%= octicon('code') %> タグ表示</button>
+        <% end %>
+        <button class="btn <%= btn %>" onclick="disableHighlights()"><%= octicon('light-bulb') %> ハイライト非表示</button>
+      </div>
+    </div>
+    <div class="nav-item">
+      <%= link_to '中断して一覧へ戻る', tasks_path, class: "btn btn-primary" %>
+      <%= link_to '作業を完了する', task_finish_path(@task), class: "btn btn-success" %>
+      <button id="help" class="btn <%= btn %>" data-toggle="modal" data-target="#help"><%= octicon('question') %></button>
+    </div>
+  </div>
+</nav>
+
+<br>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 taggable" id="content">
+        <% @task.task_paragraphs.each do |p| %>
+          <% if p.body.include?('</li>') && !p.no_tag.empty? %>
+          </li></span>
+          <% end %>
+          <% if p.body.include?('</ul>') && !p.no_tag.empty? %>
+          </ul></span>
+          <% end %>
+          <a name="<%= p.id %>"></a>
+          <span class="paragraph" data-paragraphid="<%= p.id %>">
+            <% unless @plain_view %>
+              <%=raw highlight(show_paragraph(p), @highlights) %>
+            <% else %>
+              <%=raw highlight(p.body, @highlights) %>
+            <% end %>
+          </span>
+        <% end %>
+      </div>
+
+      <div class="col-md-4" id="sidebar">
+
+        <br>
+
+        <% if @task.category.def_link %>
+          <div class="row offset-md-1">
+            <%= link_to('属性定義一覧を別ウィンドウでひらく', @task.category.def_link, target: :_blank) %>
+          </div>
+        <% end %>
+        <div class="row offset-md-1">
+          <%= link_to('元記事を別ウィンドウでひらく', pages_url(@task.page.pageid), target: :_blank) %>
+        </div>
+
+        <div class="input-group mb-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text">選択</span>
+          </div>
+          <span class="form-control">属性名</span>
+          <div class="input-group-append">
+            <span class="input-group-text">ハイライト</span>
+          </div>
+        </div>
+        <% @attributes.each do |a| %>
+          <% values = @attribute2values[a.id] %>
+          <div class="input-group mb-1">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <input type="radio" name="attribute" id="<%= a.id %>" data-screenname="<%= a.screenname %>" <% if a.id == @attribute_id %>checked<% end %>>
+              </span>
+            </div>
+            <span class="form-control" href="#<%= a.name %>" data-toggle="collapse" aria-expanded="<%= a.id == @attribute_id %>"><%= a.screenname %></span>
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <input type="checkbox" class="highlight-attribute" data-attributeid="<%= a.id %>" <% if !values.empty? && values.to_set.subset?(@highlights.to_set) %>checked<% end %>>
+              </span>
+            </div>
+          </div>
+          <div class="collapse <% if a.id == @attribute_id %>show<% end %> list-group list-group-subitem" id="<%= a.name %>">
+            <div class="list-group-item list-group-item-info">
+              <span><%= "<#{a.tag}>" %></span>
+            </div>
+            <% values.each do |v| %>
+              <div class="list-group-item" style="padding: 0">
+                <div class="input-group">
+                  <span class="form-control"><%= v %></span>
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <input type="checkbox" class="highlight-value" data-value="<%= v %>" <% if @highlights.include? v %>checked<% end %>>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <br>
+
+      </div>
+    </div>
+  </div>
+</div>

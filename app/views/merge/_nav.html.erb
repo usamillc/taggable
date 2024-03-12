@@ -1,0 +1,31 @@
+<nav class="navbar fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="/merge_tasks">Mergeable</a>
+  <div class="container">
+    <div class="navbar-nav">
+      <div class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% if merge_attribute.nil? %>
+              属性
+            <% else %>
+              <%= merge_attribute.screenname %>
+            <% end %>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <% merge_task.merge_attributes.each do |ma| %>
+              <%= link_to ma.screenname, merge_attribute_path(ma), class: "dropdown-item #{'disabled' if ma.id == merge_attribute&.id}" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-item">
+      <% if complete_url %>
+        <%= link_to complete_label, complete_url, method: :put, class: "btn btn-success #{complete_url_class}" %>
+      <% end %>
+      <%= link_to '中断して一覧へ戻る', merge_tasks_path(category_id: merge_task.category.id, status: merge_task.status), class: "btn btn-primary" %>
+    </div>
+  </div>
+</nav>
+
+<br>

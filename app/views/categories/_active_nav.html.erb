@@ -1,0 +1,13 @@
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <div class="nav-link <%= 'active' if params[:show_hidden] %>">
+      <%= link_to_unless params[:show_hidden], '全て', categories_path(show_hidden: true) %>
+    </div>
+  </li>
+  <li class="nav-item">
+    <div class="nav-link <%= 'active' unless params[:show_hidden] %>">
+      <%= link_to_if params[:show_hidden], '表示中のみ', categories_path %>
+    </div>
+  </li>
+</ul>

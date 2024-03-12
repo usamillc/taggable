@@ -1,0 +1,6 @@
+<nav class="nav nav-tabs nav-justified">
+  <%= link_to '全て', admin_root_path, class: "nav-link #{"active" unless params[:category_id]}" %>
+  <% categories.each do |id, screenname| %>
+    <%= link_to screenname, admin_root_path(category_id: id), class: "nav-link #{"active" if params[:category_id].to_i == id}" %>
+  <% end %>
+</nav>

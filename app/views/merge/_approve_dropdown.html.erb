@@ -1,0 +1,17 @@
+<div class="btn-group approve-dropdown" data-mergeTagId=<%= merge_tag.id %>>
+  <button type="button" class="btn btn-light">
+&lt;<%= tag %>&gt;<%= value %>&lt;/<%= tag %>&gt;
+  </button>
+  <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" id="approval-<%= merge_tag.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  </button>
+  <div class="dropdown-menu" aria-labelledby="approval-<%= merge_tag.id %>">
+    <span class="dropdown-item approve" data-mergeTagId=<%= merge_tag.id %>><%= octicon('check') %> 承認</span>
+    <div class="dropdown-divider"></div>
+    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteTagModal-<%= merge_tag.id %>">
+      <%= octicon('x') %> 削除
+    </button>
+  </div>
+</div>
+<span class="tag approved" data-mergeTagId=<%= merge_tag.id %>>&lt;<%= tag %>&gt;<%= value %>&lt;/<%= tag %>&gt;</span>
+<span class="spinner-border spinner-border-sm text-secondary" data-mergeTagId=<%= merge_tag.id %>></span>
+<span class="badge badge-success badge-pill approved" data-mergeTagId=<%= merge_tag.id %>>approved!</span>

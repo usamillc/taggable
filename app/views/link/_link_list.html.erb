@@ -1,0 +1,50 @@
+<ul class="nav nav-tabs" id="linkList" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="value-tab" data-toggle="tab" href="#value" role="tab" aria-controls="value" aria-selected="true">属性値別</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="attribute-tab" data-toggle="tab" href="#attribute" role="tab" aria-controls="attribute" aria-selected="false">属性別</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="linkListContent">
+  <div class="tab-pane fade show active" id="value" role="tabpanel" aria-labelledby="value-tab">
+    <% task.approved_link_titles_by_value.each do |value, link_count| %>
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-secondary"><%= value %></li>
+        <% link_count.each do |title, c| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <%= title %>
+              </div>
+              <div class="col-sm-2">
+                <span class="badge badge-light"><%= c %></span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="tab-pane fade" id="attribute" role="tabpanel" aria-labelledby="attribute-tab">
+    <% task.approved_link_titles_by_attribute.each do |attr, link_count| %>
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-secondary"><%= attr %></li>
+        <% link_count.each do |title, c| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <%= title %>
+              </div>
+              <div class="col-sm-2">
+                <span class="badge badge-light"><%= c %></span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

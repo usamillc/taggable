@@ -1,0 +1,7 @@
+<% if task.status == 'not_started' %>
+  <%= link_to '作業を開始する', task_start_path(task), class: "btn btn-primary" %>
+<% elsif task.status == 'in_progress' %>
+  <%= link_to '作業を完了する', task_finish_path(task, category_id: params[:category_id], status: params[:status]), class: "btn btn-success" %>
+<% else %>
+  <%= link_to '作業を再開する', task_start_path(task), class: "btn btn-danger" %>
+<% end %>

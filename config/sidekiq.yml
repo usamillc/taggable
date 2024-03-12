@@ -1,0 +1,4 @@
+---
+:max_retries: 0
+production:
+  :max_retries: 3

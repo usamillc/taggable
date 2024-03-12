@@ -1,0 +1,31 @@
+<%= render 'adminnav' %>
+
+<div class="container">
+  <%= render partial: 'filters', locals: { annotations: @annotations, unscoped: @unscoped, categories: @categories, attributes: @attributes } %>
+  <%= paginate @annotations %>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>属性値</th>
+        <th>カテゴリー</th>
+        <th>タイトル</th>
+        <th>属性名</th>
+        <th>抽出した人</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @annotations.each do |a| %>
+        <tr>
+          <td><%= link_to a.value, task_url(a.task_paragraph.task, anchor: a.task_paragraph.id) %></td>
+          <td><%= a.annotation_attribute.category.screenname %></td>
+          <td><%= a.task_paragraph.task.page.title %></td>
+          <td><%= a.annotation_attribute.screenname %></td>
+          <td><%= a.annotator.screenname %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

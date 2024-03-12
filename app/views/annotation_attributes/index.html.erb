@@ -1,0 +1,114 @@
+<%= render 'adminnav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <h1><%= @category.screenname %></h1>
+
+  <hr>
+
+  <h4>属性一覧 (全 <%= @attributes.count %> 属性)</h4>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>属性名</th>
+        <th>（英表記）</th>
+        <th>総抽出数</th>
+        <th>表記変更</th>
+        <th>位置変更</th>
+        <th>リンク対象</th>
+        <th>削除</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @attributes.each_with_index do |a, i| %>
+        <tr>
+          <td>
+            <div id=<%= a.id %>>
+              <%= a.screenname %>
+            </div>
+          </td>
+          <td><%= a.name %></td>
+          <td><%= a.annotations.count %></td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editAttributeModal-<%= a.id %>">
+              変更
+            </button>
+            <%= render 'edit_modal', attribute: a %>
+          </td>
+          <td>
+            <% if i == 0 %>
+              <button type="button" class="btn btn-light btn-sm" disabled>
+                <svg class="bi bi-caret-up-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 00.753-1.659l-4.796-5.48a1 1 0 00-1.506 0z"/>
+                </svg>
+              </button>
+            <% else %>
+              <%= link_to up_attribute_path(a), method: :patch, class: 'btn btn-light btn-sm' do %>
+                <svg class="bi bi-caret-up-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 00.753-1.659l-4.796-5.48a1 1 0 00-1.506 0z"/>
+                </svg>
+              <% end %>
+            <% end %>
+            <% if i == @attributes.count - 1 %>
+              <button type="button" class="btn btn-light btn-sm" disabled>
+                <svg class="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"/>
+                </svg>
+              </button>
+            <% else %>
+              <%= link_to down_attribute_path(a), method: :patch, class: 'btn btn-light btn-sm' do %>
+                <svg class="bi bi-caret-down-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"/>
+                </svg>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if a.linkable? %>
+              <%= link_to '対象外にする', toggle_linkable_path(a), method: :patch, class: 'btn btn-danger btn-sm' %>
+            <% else %>
+              <%= link_to '対象にする', toggle_linkable_path(a), method: :patch, class: 'btn btn-success btn-sm' %>
+            <% end %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAttributeModal-<%= a.id %>">
+              <svg class="bi bi-x" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <desc>delete</desc>
+                <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <%= render 'delete_modal', attribute: a %>
+          </td>
+        </tr>
+      <% end %>
+      <%= form_for(@attribute, url: annotation_attributes_path) do |f| %>
+        <tr>
+          <td><%= f.text_field :screenname, class: 'form-control' %></td>
+          <td><%= f.text_field :name, class: 'form-control' %></td>
+          <td></td>
+          <td>
+            <%= f.hidden_field :category_id, value: @category.id %>
+            <%= f.hidden_field :ord, value: @attributes.count %>
+            <%= f.submit '追加', class: "btn btn-danger" %>
+          </td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <hr>
+
+</div>
+
+<% if params[:focus] %>
+  <script type="text/javascript">
+    var id = '<%= params[:focus] %>';
+    var element = document.getElementById(id);
+    element.scrollIntoView(true);
+  </script>
+<% end %>

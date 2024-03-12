@@ -1,0 +1,61 @@
+<br>
+
+<%= render 'notification' %>
+
+<ul class="list-group">
+  <li class="list-group-item list-group-item-secondary">
+    <div class="row">
+      <div class="col-sm-6">
+        <strong><%= @annotation.merge_value.value %></strong>
+        <span class="text-muted mx-auto"><%= @annotation.merge_attribute.screenname %></span>
+      </div>
+    </div>
+  </li>
+
+  <% if @annotation.incomplete? %>
+    <li class="list-group-item list-group-item-danger">
+      アノテーション結果が一致しませんでした。最終的なアノテーションを確定させてください。
+    </li>
+  <% end %>
+
+  <%= form_with model: @annotation, url: link_merge_annotation_path, method: :put do |f| %>
+    <%= f.fields_for :annotated_entity_links, @annotation.annotated_entity_links do |ff| %>
+      <% ff.object.each do |ael| %>
+        <% unless ael.new_record? %>
+          <%= ff.fields_for ael.id.to_s do |fff| %>
+            <%= fff.hidden_field :id, value: ael.id %>
+            <%= render 'annotated_entity_list_item',
+              form: fff,
+              ael: ael,
+              text_box: link_to(ael.title, mediawiki_url(ael.title, @annotation.page.version), target: :_blank, title: ael.first_sentence)
+            %>
+          <% end %>
+        <% else %>
+          <%= f.fields_for :new_link do |ff| %>
+            <%= render 'link/collapsable_list_item',
+              form: ff,
+              el: ael,
+              collapse_id: "link-types-new",
+              text_box: ff.text_field(:url, {'placeholder': "URLを入力"})
+            %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <li class="list-group-item">
+      <%= f.check_box :no_link, {checked: @annotation.no_link?}, true, false %>
+      該当リンク先なし
+      <span class="badge badge-secondary badge-pill active-count" data-toggle="tooltip" data-placement="left" title="<%= @annotation.no_link_count %>名が該当リンク先なしと判断しています"><%= @annotation.no_link_count %></span>
+    </li>
+    <li class="list-group-item">
+      <%= f.submit '保存', class: "btn btn-primary" %>
+    </li>
+  <% end %>
+</ul>
+
+<br>
+
+<%= render 'link/link_list', task: @annotation.link_merge_task %>
+
+<br>

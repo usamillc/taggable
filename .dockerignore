@@ -1,0 +1,7 @@
+*.log
+.direnv*
+.git
+/log
+config/master.key
+result
+tmp

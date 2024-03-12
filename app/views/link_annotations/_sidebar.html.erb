@@ -1,0 +1,62 @@
+<br>
+
+<%= render 'notification' %>
+
+<ul class="list-group">
+  <li class="list-group-item list-group-item-secondary">
+    <div class="row">
+      <div class="col-sm-6">
+        <strong><%= @annotation.merge_tag.merge_value.value %></strong>
+        <span class="text-muted mx-auto"><%= @annotation.merge_tag.merge_value.merge_attribute.screenname %></span>
+      </div>
+      <div class="col-sm-6">
+        <small class="mx-auto"><%= link_to('マージツールで修正', @annotation.merge_tag.merge_value, target: :_blank) %></small>
+      </div>
+    </div>
+  </li>
+  <% unless @annotation.title_matched_suggest_exists? %>
+    <li class="list-group-item list-group-item-danger">
+      属性値と同一語句の見出し語のWikipediaページは存在しませんでした。
+    </li>
+  <% end %>
+  <%= form_with model: @annotation, url: link_annotation_path, method: :put do |f| %>
+    <%= f.fields_for :entity_links, @annotation.entity_links do |ff| %>
+      <% ff.object.each do |el| %>
+        <% unless el.new_record? %>
+          <%= ff.fields_for el.id.to_s do |fff| %>
+            <%= fff.hidden_field :id, value: el.id %>
+            <%= render 'link/collapsable_list_item',
+              form: fff,
+              el: el,
+              collapse_id: "link-types-#{el.id}",
+              text_box: link_to(el.title, mediawiki_url(el.title, @annotation.page.version), target: :_blank, title: el.first_sentence)
+            %>
+          <% end %>
+        <% else %>
+          <%= f.fields_for :new_link do |ff| %>
+            <%= render 'link/collapsable_list_item',
+              form: ff,
+              el: el,
+              collapse_id: "link-types-new",
+              text_box: ff.text_field(:url, {'placeholder': "URLを入力"})
+            %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <li class="list-group-item">
+      <%= f.check_box :no_link, {checked: @annotation.no_link?}, true, false %>
+      該当リンク先なし
+    </li>
+    <li class="list-group-item">
+      <%= f.submit '保存', class: "btn btn-primary" %>
+    </li>
+  <% end %>
+</ul>
+
+<br>
+
+<%= render 'link/link_list', task: @annotation.link_task %>
+
+<br>

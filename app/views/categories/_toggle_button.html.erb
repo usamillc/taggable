@@ -1,0 +1,5 @@
+<% if category.active? %>
+  <%= link_to '非表示にする', hide_category_path(category, show_hidden: show_hidden, page: page), method: :patch, class: 'btn btn-secondary' %>
+<% else %>
+  <%= link_to '表示する', activate_category_path(category, show_hidden: show_hidden, page: page), method: :patch, class: 'btn btn-outline-secondary' %>
+<% end %>

@@ -1,0 +1,42 @@
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/* custom template */
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  height: 100%;
+  margin-top:56px;
+  margin-left:0;
+  margin-right:0;
+}
+
+.wrapper:before, .wrapper:after,
+.column:before, .column:after {
+  content: "";
+  display: table;
+}
+
+.wrapper:after,
+.column:after {
+  clear: both;
+}
+
+#sidebar {
+  background-color:#f8f8f8;
+  height:92%;
+  position:fixed;
+  margin-top:56px;
+  top: 0;
+  right:0;
+}
+
+.list-group-subitem {
+  margin-left: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}

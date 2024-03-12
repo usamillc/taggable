@@ -1,0 +1,22 @@
+<%= render 'nav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <h1>ログイン</h1>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for(:session, url: login_path) do |f| %>
+
+        <%= f.label :username, 'ユーザー名' %>
+        <%= f.text_field :username, class: 'form-control' %>
+
+        <%= f.label :password, 'パスワード' %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.submit "ログイン", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

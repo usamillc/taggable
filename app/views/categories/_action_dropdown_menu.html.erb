@@ -1,0 +1,12 @@
+<div class="dropdown">
+  <button type="button" class="btn btn-primary dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    変更
+  </button>
+  <div class="dropdown-menu" aria-labelledby="actionDropdown">
+    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#editCategoryModal-<%= category.id %>">
+      名称等変更
+    </button>
+
+    <%= link_to '属性変更', attributes_index_path(category), class: 'dropdown-item', 'data-turbolinks': false %>
+  </div>
+</div>

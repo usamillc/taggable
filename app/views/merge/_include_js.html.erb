@@ -1,0 +1,13 @@
+<script type="text/javascript">
+  jQuery.query = { numbers: false };
+</script>
+<%= javascript_include_tag 'jquery.query-object.js' %>
+<%= javascript_include_tag 'jquery.mCustomScrollbar.concat.min.js' %>
+<% if merge_attribute_id %>
+  <script type="text/javascript">
+    function getAttributeId() {
+      return <%= merge_attribute_id %>;
+    }
+  </script>
+  <%= javascript_include_tag 'merge.js' %>
+<% end %>

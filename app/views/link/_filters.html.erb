@@ -1,0 +1,47 @@
+<nav class="nav nav-tabs nav-justified">
+
+  <% if current_page?(link_tasks_path) %>
+
+    <%= link_to '全て', link_tasks_path, class: "nav-link #{"active" unless params[:category_id]}" %>
+    <% categories.each do |id, screenname| %>
+      <%= link_to screenname, link_tasks_path(category_id: id), class: "nav-link #{"active" if params[:category_id].to_i == id}" %>
+    <% end %>
+
+  <% elsif current_page?(link_merge_tasks_path) %>
+
+    <%= link_to '全て', link_merge_tasks_path, class: "nav-link #{"active" unless params[:category_id]}" %>
+    <% categories.each do |id, screenname| %>
+      <%= link_to screenname, link_merge_tasks_path(category_id: id), class: "nav-link #{"active" if params[:category_id].to_i == id}" %>
+    <% end %>
+
+  <% end %>
+
+</nav>
+
+<nav class="nav nav-pills nav-justified">
+
+  <% if current_page?(link_tasks_path) %>
+
+    <%= link_to link_tasks_path(category_id: params[:category_id]), class: "nav-link #{"active" unless params[:status]}" do %>
+      全て <span class="badge badge-light"><%= all_state_tasks.count %></span>
+    <% end %>
+    <% LinkTask.statuses.keys.each do |status| %>
+      <%= link_to link_tasks_path(category_id: params[:category_id], status: status), class: "nav-link #{"active" if params[:status] == status}" do %>
+        <%= show_status status %> <span class="badge badge-light"><%= all_state_tasks.where(status: status).count %></span>
+      <% end %>
+    <% end %>
+
+  <% elsif current_page?(link_merge_tasks_path) %>
+
+    <%= link_to link_merge_tasks_path(category_id: params[:category_id]), class: "nav-link #{"active" unless params[:status]}" do %>
+      全て <span class="badge badge-light"><%= all_state_tasks.count %></span>
+    <% end %>
+    <% LinkMergeTask.statuses.keys.each do |status| %>
+      <%= link_to link_merge_tasks_path(category_id: params[:category_id], status: status), class: "nav-link #{"active" if params[:status] == status}" do %>
+        <%= show_status status %> <span class="badge badge-light"><%= all_state_tasks.where(status: status).count %></span>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
+</nav>

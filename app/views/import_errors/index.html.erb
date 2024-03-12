@@ -1,0 +1,30 @@
+<%= render 'adminnav' %>
+
+<div class="container">
+
+  <h1><%= @import.category.screenname %></h1>
+  <h4>インポート（<%= @import.list.filename %>: <%= l @import.created_at, format: :long %>）エラー一覧</h4>
+  <hr>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>エラー詳細</th>
+        <th>発生日時</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @import_errors.each_with_index do |error, i| %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= error.message %></td>
+          <td><%= l error.created_at, format: :long %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<br>
+</div>

@@ -1,0 +1,21 @@
+<%= render 'link/include_js' %>
+<%= stylesheet_link_tag 'link', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<% content_for :help do %>
+  test
+<% end %>
+
+<%= render 'link/tasknav', task: @annotation.link_task %>
+
+<div class="wrapper">
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8 taggable" id="content">
+        <%= render 'link/content', page: @annotation.link_task.page, annotations_by_pid: @annotation.link_task.annotations_by_pid, current: @annotation %>
+      </div>
+      <div class="col-md-4" id="sidebar">
+        <%= render 'sidebar' %>
+      </div>
+    </div>
+  </div>
+</div>

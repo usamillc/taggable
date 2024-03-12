@@ -1,0 +1,13 @@
+<div class="modal fade" id="editCategoryModal-<%= category.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">カテゴリの名称等変更</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= render 'form', category: category, submit_label: '変更完了', show_hidden: show_hidden, page: page %>
+    </div>
+  </div>
+</div>

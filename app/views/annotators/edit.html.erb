@@ -1,0 +1,30 @@
+<%= render 'nav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <h3>ユーザー情報の変更</h3>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for(@annotator) do |f| %>
+
+        <%= f.label :username %>
+        <%= f.text_field :username, class: 'form-control' %>
+
+        <%= f.label :screenname %>
+        <%= f.text_field :screenname, class: 'form-control' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+        <%= f.submit '変更', class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <br>
+</div>

@@ -1,0 +1,43 @@
+<div class="col-md-4 mCustomScrollbar" data-mcs-theme="minimal" id="sidebar">
+
+  <br>
+
+  <div class="card">
+    <div class="card-body">
+      <%= yield :help %>
+      <ul class="list-group list-group-flush">
+        <% if category.def_link %>
+          <li class="list-group-item">
+            <%= link_to('属性定義一覧を別ウィンドウでひらく', category.def_link, target: :_blank) %>
+          </li>
+        <% end %>
+        <% if merge_attribute %>
+          <li class="list-group-item">
+            <%= link_to('元記事を別ウィンドウでひらく', pages_url(merge_attribute.merge_task.page.pageid), target: :_blank) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <% merge_attributes.each do |ma| %>
+    <hr>
+    <ul class="list-group">
+      <span class="list-group-item list-group-item-dark">
+        <%= ma.screenname %> &lt;<%= ma.tag %>&gt;
+      </span>
+      <% ma.merge_values.each do |mv| %>
+        <% data = mv.annotator_count > 1 ? { toggle: 'tooltip', placement: 'left', title: "この属性値は2名のアノテーターが抽出しています" } : {} %>
+        <%= link_to merge_value_path(mv), class: "list-group-item list-group-item-action #{'list-group-item-danger' if mv.annotator_count > 1} d-flex justify-content-between align-items-center #{'active' if mv.id == merge_value&.id}", data: data do %>
+          <%= mv.value %>
+          <% unless mv.n_tags_left.zero? %>
+            <span class="badge badge-light badge-pill <%= 'active-count' if mv.id == merge_value&.id %>" data-toggle="tooltip" data-placement="left" title="残り<%= mv.n_tags_left %>件のタグの確認が残っています"><%= mv.n_tags_left %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <br>
+
+</div>

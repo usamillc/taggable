@@ -1,0 +1,23 @@
+<snan class="dropdown">
+  <span class="dropdown-toggle" id="linksDropdown<%= dropdown_id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <u><%= text %></u>
+  </span>
+  <span class="dropdown-menu dropdown-menu-right" aria-labelledby="linksDropdown<%= dropdown_id %>">
+    <% annotations.each do |la| %>
+      <%= link_to(la.merge_attribute.screenname, polymorphic_path(la, anchor: 'current'), class: 'dropdown-item') %>
+    <% end %>
+  </span>
+</snan>
+<small>
+  <span class="badge badge-pill <%= badge_class %>">
+    <% annotations.each do |la| %>
+      <% if la == current %>
+        !
+      <% elsif la.incomplete? %>
+        ?
+      <% else %>
+        ✓
+      <% end %>
+    <% end %>
+  </span>
+</small>

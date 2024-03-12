@@ -1,0 +1,33 @@
+<div class="dropdown">
+  <button type="button" class="btn btn-danger dropdown-toggle" id="importDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    インポート
+  </button>
+  <div class="dropdown-menu" aria-labelledby="importDropdown">
+
+    <% if show_task_import %>
+      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#importModal-<%= category.id %>">
+        タスクインポート
+      </button>
+    <% else %>
+      <%= link_to 'インポート結果一覧', imports_path(category), class: 'dropdown-item', 'data-turbolinks': false %>
+    <% end %>
+
+    <% if show_merge_import %>
+      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#mergeModal-<%= category.id %>">
+        マージインポート
+      </button>
+    <% end %>
+
+    <% if show_link_import %>
+      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#linkModal-<%= category.id %>">
+        リンクインポート
+      </button>
+    <% end %>
+
+    <% if show_link_merge_import %>
+      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#linkMergeModal-<%= category.id %>">
+        リンクマージインポート
+      </button>
+    <% end %>
+  </div>
+</div>

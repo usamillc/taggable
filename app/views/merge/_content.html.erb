@@ -1,0 +1,38 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 taggable" id="content">
+        <% unless flash.empty? %>
+          <div class="alert alert-danger">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <%= flash.alert %>
+          </div>
+        <% end %>
+        <% page.paragraphs.each do |p| %>
+
+          <% if p.body.include?('</li>') && !p.no_tag.empty? %>
+          </li></span>
+          <% end %>
+          <% if p.body.include?('</ul>') && !p.no_tag.empty? %>
+          </ul></span>
+          <% end %>
+
+          <span class="paragraph" data-paragraphid="<%= p.id %>">
+            <%= yield p %>
+          </span>
+
+          <% if p.no_tag.include?('テンプレート') %>
+            </table>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= render 'merge/sidebar',
+        category: page.category,
+        merge_attribute: merge_attribute,
+        merge_attributes: merge_attributes,
+        merge_value: merge_value
+      %>
+    </div>
+  </div>
+</div>

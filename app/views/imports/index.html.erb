@@ -1,0 +1,44 @@
+<%= render 'adminnav' %>
+
+<div class="container">
+
+  <h1><%= @category.screenname %></h1>
+  <h4>インポート結果一覧</h4>
+  <hr>
+
+  <div class="mb-2 float-right">
+    <%= render 'create_button' %>
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>ファイル名</th>
+        <th>実施者</th>
+        <th>開始日時</th>
+        <th>インポート予定数</th>
+        <th>インポート完了数</th>
+        <th>エラー件数</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @imports.each_with_index do |import, i| %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= import.list.filename %></td>
+          <td><%= import.annotator.screenname %></td>
+          <td><%= l import.created_at, format: :long %></td>
+          <td><%= import.tasks_to_import %></td>
+          <td><%= import.tasks.count %></td>
+          <td>
+            <%= link_to_unless import.import_errors.empty?, import.import_errors.count, import_errors_path(import.id) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<br>
+</div>

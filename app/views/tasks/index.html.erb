@@ -1,0 +1,40 @@
+<%= render 'nav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <%= render partial: 'filters', locals: { tasks: @all_tasks, unscoped_tasks: @unscoped_tasks, categories: @categories } %>
+
+  <%= paginate @tasks %>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>タイトル</th>
+        <th>カテゴリー</th>
+        <th>現在の作業状況</th>
+        <th>抽出属性値数</th>
+        <th>可能なアクション</th>
+        <th>最終更新者</th>
+        <th>最終更新日時</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <th><%= task.page.aid %></td>
+          <td><%= link_to task.page.title, task_path(task) %></td>
+          <td><%= task.page.category.screenname %></td>
+          <td><%= show_status task.status %></td>
+          <td><%= @annotation_counts.fetch(task.id, 0) %></td>
+          <td><%= render partial: 'action', locals: { task: task } %></td>
+          <td><%= task.last_changed_annotator&.screenname %></td>
+          <td><%= l task.updated_at, format: :long %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

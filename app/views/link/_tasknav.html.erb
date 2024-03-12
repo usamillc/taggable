@@ -1,0 +1,48 @@
+<nav class="navbar fixed-top navbar-dark bg-dark">
+  <% if linkable_page? %>
+    <a class="navbar-brand" href="/link_tasks">Linkable</a>
+  <% elsif link_mergeable_page? %>
+    <a class="navbar-brand" href="/link_merge_tasks">Link Mergeable</a>
+  <% end %>
+
+  <div class="nav-item">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        作業
+      </button>
+
+      <div class="dropdown-menu dropdown-menu-right">
+        <% if linkable_page? %>
+          <%= link_to '中断して一覧へ戻る', link_tasks_path(category_id: task.category.id, status: task.status), class: 'dropdown-item' %>
+        <% elsif link_mergeable_page? %>
+          <%= link_to '中断して一覧へ戻る', link_merge_tasks_path(category_id: task.category.id, status: task.status), class: 'dropdown-item' %>
+        <% end %>
+
+        <% if task.completable? %>
+          <% if linkable_page? %>
+            <%= link_to '作業を完了する', link_task_finish_path(task), method: :put, class: 'dropdown-item' %>
+          <% elsif link_mergeable_page? %>
+            <%= link_to '作業を完了する', link_merge_task_finish_path(task), method: :put, class: 'dropdown-item' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        参照用リンク
+      </button>
+
+      <div class="dropdown-menu dropdown-menu-right">
+        <% if task.category.def_link %>
+          <%= link_to('属性定義一覧', task.category.def_link, target: :_blank, class: 'dropdown-item') %>
+        <% end %>
+        <%= link_to('元記事', pages_url(task.page.pageid), target: :_blank, class: 'dropdown-item') %>
+      </div>
+    </div>
+
+    <button id="help" class="btn btn-light" data-toggle="modal" data-target="#help"><%= octicon('question') %></button>
+  </div>
+</nav>
+
+<br>

@@ -1,0 +1,91 @@
+<%= render 'adminnav' %>
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <%= render 'active_nav' %>
+  </br>
+  <%= paginate @categories %>
+
+  <hr>
+
+  <div class="mb-2 float-right">
+    <%= render 'create_button', show_hidden: params[:show_hidden] %>
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>カテゴリ名</th>
+        <th colspan="2">進捗状況</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th>（英表記）</th>
+        <th>アノテーション</th>
+        <th>マージ</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @categories.each do |c| %>
+        <tr>
+          <th scope="row"><%= c.id %></td>
+          <td>
+            <div>
+              <%= c.screenname %>
+            </div>
+            <div>
+              (<%= c.name %>)
+            </div>
+          </td>
+          <td>
+            <% unless @task_total[c.id].nil? %>
+              <%= render 'progress', total: @task_total[c.id], completed: @task_completed[c.id] %>
+            <% end %>
+          </td>
+          <td>
+            <% unless @merge_total[c.id].nil? %>
+              <%= render 'progress', total: @merge_total[c.id], completed: @merge_completed[c.id] %>
+            <% end %>
+          </td>
+          <td>
+            <%= render 'action_dropdown_menu',
+              category: c
+            %>
+            <%= render 'edit_modal', category: c, show_hidden: params[:show_hidden], page: params[:page] %>
+          </td>
+          <td>
+            <%= render 'import_dropdown_menu',
+              category: c,
+              show_task_import: c.imports.count.zero?,
+              show_merge_import: c.tasks.present?,
+              show_link_import: c.merge_tasks.present?,
+              show_link_merge_import: c.link_tasks.present?
+            %>
+            <%= render 'import_modal', category: c, import: @import, show_hidden: params[:show_hidden], page: params[:page] %>
+            <%= render 'merge_modal', category: c, show_hidden: params[:show_hidden], page: params[:page] %>
+            <%= render 'link_modal', category: c, show_hidden: params[:show_hidden], page: params[:page] %>
+            <%= render 'link_merge_modal', category: c, show_hidden: params[:show_hidden], page: params[:page] %>
+          </td>
+          <td>
+            <%= render 'toggle_button', category: c, show_hidden: params[:show_hidden], page: params[:page] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<li class="list-group-item">
+  <%= form.check_box :status, {checked: ael.approved?}, :approved, :rejected %>
+  <%= text_box %>
+</li>
+<li class="list-group-item mx-auto">
+  <%= form.check_box :match, {checked: ael.match?}, true, false %> 完全一致
+  <span class="badge badge-secondary badge-pill active-count" data-toggle="tooltip" data-placement="left" title="<%= ael.match_count %>名が完全一致リンクと判断しています"><%= ael.match_count %></span>
+  <br>
+  <%= form.check_box :later_name, {checked: ael.later_name?}, true, false %> Later Name
+  <span class="badge badge-secondary badge-pill active-count" data-toggle="tooltip" data-placement="left" title="<%= ael.later_name_count %>名が Later Name リンクと判断しています"><%= ael.later_name_count %></span>
+  &nbsp
+  <%= form.check_box :part_of, {checked: ael.part_of?}, true, false %> Part-of
+  <span class="badge badge-secondary badge-pill active-count" data-toggle="tooltip" data-placement="left" title="<%= ael.part_of_count %>名が Part-of リンクと判断しています"><%= ael.part_of_count %></span>
+  <br>
+  <%= form.check_box :derivation_of, {checked: ael.derivation_of?}, true, false %> Derivation-of
+  <span class="badge badge-secondary badge-pill active-count" data-toggle="tooltip" data-placement="left" title="<%= ael.derivation_of_count %>名が Derivation-of リンクと判断しています"><%= ael.derivation_of_count %></span>
+</li>

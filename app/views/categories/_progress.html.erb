@@ -1,0 +1,11 @@
+<% completed = 0 if completed.nil? %>
+<% p = (completed.to_f / total * 100).to_i %>
+
+<div class="progress" style="height: 20px; width: 100px">
+  <div class="progress-bar" role="progressbar" style="width: <%= p %>%;"
+                                               aria-valuenow="<%= completed %>"
+                                               aria-valuemin="0"
+                                               aria-valuemax="<%= total %>">
+  </div>
+</div>
+<%= completed %> / <%= total %>

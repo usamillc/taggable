@@ -1,0 +1,15 @@
+<li class="list-group-item">
+  <%= form.check_box :status, {'data-toggle': "collapse", 'data-target': "##{collapse_id}", checked: el.approved?}, :approved, :rejected %>
+  <%= text_box %>
+</li>
+<div class="collapse <%= 'show' if el.approved? %>" id="<%= collapse_id %>">
+  <li class="list-group-item mx-auto">
+    <%= form.check_box :match, {checked: el.match?}, true, false %> 完全一致
+    <br>
+    <%= form.check_box :later_name, {checked: el.later_name?}, true, false %> Later Name
+    &nbsp
+    <%= form.check_box :part_of, {checked: el.part_of?}, true, false %> Part-of
+    &nbsp
+    <%= form.check_box :derivation_of, {checked: el.derivation_of?}, true, false %> Derivation-of
+  </li>
+</div>

@@ -1,0 +1,40 @@
+<%= render 'merge/include_js', merge_attribute_id: @merge_value.merge_attribute.id %>
+
+<% content_for :help do %>
+  <% v = "「#{@merge_value.value}」" %>
+  <% if @merge_value.n_tags_left > 0 %>
+    属性値<strong><%= v %></strong>のタグについて確認作業を行ってください。各タグの右端にメニューが表示されている場合は、メニューより承認または削除を選択してください。
+  <% else %>
+    <% if @merge_value.merge_tags.empty? %>
+      属性値<strong><%= v %></strong>はタグが付けられていません。属性値<strong><%= v %></strong>についてタグを付けない判断をされた場合は、
+    <% else %>
+      属性値<strong><%= v %></strong>のタグについて確認作業を行ってください。属性値<strong><%= v %></strong>についての確認作業が終わった場合は、
+    <% end %>
+    このまま他の属性値の確認に移るか、属性<strong><%= @merge_value.merge_attribute.screenname %></strong>の確認作業を完了させてください。他の属性値の確認に移るには、以下の属性値リストより選択してください。属性の確認作業を完了させるには、上部の"この属性の作業を完了する"ボタンをクリックしてください。
+  <% end %>
+  この画面では属性<strong><%= @merge_value.merge_attribute.screenname %></strong>のタグの追加を行うことができます。追加を行う場合は、抽出作業時と同様にマウスで範囲選択をするか、ハイライトされた部分をクリックして選択し、<kbd>z</kbd>もしくは<kbd>m</kbd>キーを押してください。また、この画面に表示されているタグの削除も行うことができます。削除を行う場合は、画面上で削除したいタグをクリックした後、表示されるダイアログに従い削除ボタンを選択してください。
+<% end %>
+
+<%= render 'merge/nav',
+  merge_task: @merge_value.merge_task,
+  merge_attribute: @merge_value.merge_attribute,
+  complete_label: 'この属性の作業を完了する',
+  complete_url: complete_merge_attribute_path(@merge_value.merge_attribute),
+  complete_url_class: @merge_value.merge_attribute.completable? ? nil : 'complete-hidden'
+%>
+
+<%= render 'merge/content',
+  page: @merge_value.merge_task.page,
+  merge_attribute: @merge_value.merge_attribute,
+  merge_attributes: [@merge_value.merge_attribute],
+  merge_value: @merge_value do |p| %>
+  <% if @tags_by_pid.key?(p.id) %>
+    <% html = raw build_tag(p, @tags_by_pid[p.id], @merge_value.merge_attribute.tag) %>
+    <%= raw highlight_value(html, @merge_value.value) %>
+    <% @tags_by_pid[p.id].each do |mt| %>
+      <%= render 'merge/delete_modal', merge_tag: mt %>
+    <% end %>
+  <% else %>
+    <%= raw highlight_value(p.body, @merge_value.value) %>
+  <% end %>
+<% end %>

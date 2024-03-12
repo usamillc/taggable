@@ -1,0 +1,42 @@
+<nav class="navbar navbar-light bg-light">
+  <% if current_page?(merge_tasks_path) %>
+    <a class="navbar-brand" href="/merge_tasks">Mergeable</a>
+  <% elsif current_page?(link_tasks_path) %>
+    <a class="navbar-brand" href="/link_tasks">Linkable</a>
+  <% elsif current_page?(link_merge_tasks_path) %>
+    <a class="navbar-brand" href="/link_merge_tasks">Link Mergeable</a>
+  <% else %>
+    <a class="navbar-brand" href="/">Taggable</a>
+  <% end %>
+  <div class="nav-item">
+    <% if logged_in? %>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ページ移動
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <% if current_annotator.admin? %>
+            <a class="dropdown-item" href="/admin">管理者ページへ</a>
+          <% end %>
+          <a class="dropdown-item" href="/tasks">抽出作業ページへ</a>
+          <% if current_annotator.merge_allowed? %>
+            <a class="dropdown-item" href="/merge_tasks">マージ作業ページへ</a>
+          <% end %>
+          <a class="dropdown-item" href="/link_tasks">リンク作業ページへ</a>
+          <a class="dropdown-item" href="/link_merge_tasks">リンクマージ作業ページへ</a>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          アカウント
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="<%= edit_annotator_path(current_annotator) %>">ユーザー情報変更</a>
+          <a class="dropdown-item" data-method="delete" href="/logout">ログアウト</a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</nav>
+
+<br>

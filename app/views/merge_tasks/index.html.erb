@@ -1,0 +1,49 @@
+<%= render 'nav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <%= render partial: 'filters', locals: { all_state_tasks: @all_state_tasks, categories: @categories } %>
+
+  <%= paginate @merge_tasks %>
+  <br>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>タイトル</th>
+        <th>カテゴリー</th>
+        <th>現在の作業状況</th>
+        <th>進捗状況</th>
+        <th>可能なアクション</th>
+        <th>最終更新者</th>
+        <th>最終更新日時</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @merge_tasks.each do |m| %>
+        <tr>
+          <th><%= m.page.aid %></td>
+          <td><%= link_to m.page.title, merge_task_path(m) %></td>
+          <td><%= m.page.category.screenname %></td>
+          <td><%= show_status m.status %></td>
+          <td>
+            <div class="progress" style="height: 20px;">
+              <% total = m.merge_attributes.count %>
+              <% completed = m.merge_attributes.completed.count %>
+              <% p = (completed.to_f / total * 100).to_i %>
+              <div class="progress-bar" role="progressbar" style="width: <%= p %>%;" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="<%= total %>">
+              </div>
+            </div>
+            <%= p %> %
+          </td>
+          <td><%= render partial: 'action', locals: { merge_task: m } %></td>
+          <td><%= m.last_changed_annotator&.screenname %></td>
+          <td><%= l m.updated_at, format: :long %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

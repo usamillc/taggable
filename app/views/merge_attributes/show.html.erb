@@ -1,0 +1,34 @@
+<%= render 'merge/include_js', merge_attribute_id: @merge_attribute.id %>
+
+<% content_for :help do %>
+  <% sn = @merge_attribute.screenname %>
+  <% if @merge_attribute.merge_values.empty? %>
+    属性<strong><%= sn %></strong>として抽出された属性値はありません。属性<strong><%= sn %></strong>の作業を終わらせるには、上部の"この属性の作業を完了する"ボタンをクリックしてください。この画面において、<strong><%= sn %></strong>の属性値の抽出を行うことができます。抽出を行う場合は、抽出作業時と同様にマウスで範囲選択をし、<kbd>z</kbd>もしくは<kbd>m</kbd>キーを押してください。
+  <% else %>
+    属性<strong><%= sn %></strong>として抽出されたすべての属性値について確認作業が終わっています。属性<strong><%= sn %></strong>の作業を終わらせるには、上部の"この属性の作業を完了する"ボタンをクリックしてください。この画面ではタグの追加・削除を行うことができます。追加を行う場合は、抽出作業時と同様にマウスで範囲選択をし、<kbd>z</kbd>もしくは<kbd>m</kbd>キーを押してください。削除を行う場合は、画面上で削除したいタグをクリックした後、表示されるダイアログに従い削除ボタンを選択してください。
+  <% end %>
+<% end %>
+
+<%= render 'merge/nav',
+  merge_task: @merge_attribute.merge_task,
+  merge_attribute: @merge_attribute,
+  complete_label: 'この属性の作業を完了する',
+  complete_url: @merge_attribute.completable? ? complete_merge_attribute_path(@merge_attribute) : nil,
+  complete_url_class: nil
+%>
+
+<%= render 'merge/content',
+  page: @merge_attribute.merge_task.page,
+  merge_attribute: @merge_attribute,
+  merge_attributes: [@merge_attribute],
+  merge_value: nil do |p| %>
+  <% if @tags_by_pid.key?(p.id) %>
+    <% html = build_tag(p, @tags_by_pid[p.id], @merge_attribute.tag) %>
+    <%= raw html %>
+    <% @tags_by_pid[p.id].each do |mt| %>
+      <%= render 'merge/delete_modal', merge_tag: mt %>
+    <% end %>
+  <% else %>
+    <%= raw p.body %>
+  <% end %>
+<% end %>

@@ -1,0 +1,29 @@
+<%= render 'link/include_js' %>
+
+<% content_for :help do %>
+<% end %>
+
+<%= render 'link/tasknav', task: @task %>
+
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 taggable" id="content">
+        <%= render 'link/content', page: @task.page, annotations_by_pid: @task.annotations_by_pid, current: nil %>
+      </div>
+      <div class="col-md-4 mCustomScrollbar" data-mcs-theme="minimal" id="sidebar">
+        <br>
+
+        <div class="card">
+          <div class="card-body">
+            すべての属性値に対して、リンクの紐付けが終わりました。上部の<strong>作業</strong>ボタンより、このタスクの作業を完了させてください。作業内容の修正は作業完了後でも行うことができます。
+          </div>
+        </div>
+
+        <br>
+
+        <%= render 'link/link_list', task: @task %>
+      </div>
+    </div>
+  </div>
+</div>

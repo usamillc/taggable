@@ -1,0 +1,9 @@
+<% if task.status == 'not_started' %>
+  <%= link_to '作業を開始する', link_merge_task_start_path(task), method: :put, class: "btn btn-primary" %>
+<% elsif task.status == 'in_progress' %>
+  <% if task.completable? %>
+    <%= link_to '作業を完了する', link_merge_task_finish_path(task), method: :put, class: "btn btn-success" %>
+  <% end %>
+<% else %>
+  <%= link_to '作業を再開する', link_merge_task_start_path(task), method: :put, class: "btn btn-danger" %>
+<% end %>

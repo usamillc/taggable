@@ -1,0 +1,55 @@
+<%= render 'adminnav' %>
+
+<div class="container">
+  <%= render 'notification' %>
+
+  <%= paginate @annotators %>
+
+  <br>
+
+  <%= link_to '+ 追加', new_annotator_path, class: 'btn btn-primary' %>
+
+  <hr>
+
+  <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>#</th>
+        <th>ユーザー名</th>
+        <th>名前</th>
+        <th>管理者権限</th>
+        <th>進捗状況</th>
+        <th>アクション</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @annotators.each do |a| %>
+        <tr>
+          <td><%= a.id %></td>
+          <td><%= a.username %></td>
+          <td><%= a.screenname %></td>
+          <td>
+            <% if a.admin? %>
+              <span class="badge badge-danger">あり</span>
+            <% end %>
+          </td>
+          <td>
+            作業中 <span class="badge badge-secondary"><%= a.tasks.in_progress.count %></span>
+            完了 <span class="badge badge-success"><%= a.tasks.completed.count %></span>
+          </td>
+          <td>
+            <% unless a == current_annotator %>
+              <%= link_to '削除', destroy_annotator_path(a), method: :delete, class: 'btn btn-secondary' %>
+              <% unless a.admin? %>
+                <%= link_to '管理者権限を付与', toggle_admin_path(a),method: :patch, class: 'btn btn-danger' %>
+              <% else %>
+                <%= link_to '管理者権限をなくす', toggle_admin_path(a),method: :patch, class: 'btn btn-warning' %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

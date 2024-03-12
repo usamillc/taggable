@@ -1,0 +1,2 @@
+module MergeAttributesHelper
+end

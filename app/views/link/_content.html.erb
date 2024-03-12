@@ -1,0 +1,25 @@
+<% page.paragraphs.each do |p| %>
+  <% if p.body.include?('</li>') && !p.no_tag.empty? %>
+    </li></span>
+  <% end %>
+
+  <% if p.body.include?('</ul>') && !p.no_tag.empty? %>
+    </ul></span>
+  <% end %>
+
+  <% if @prev_paragraph == p %>
+    <span class="paragraph" id="current" data-paragraphid="<%= p.id %>">
+  <% else %>
+    <span class="paragraph" data-paragraphid="<%= p.id %>">
+  <% end %>
+    <% if annotations_by_pid.key?(p.id) %>
+      <%= raw build_html(p, annotations_by_pid[p.id], current) %>
+    <% else %>
+      <%= raw p.body %>
+    <% end %>
+  </span>
+
+  <% if p.no_tag.include?('テンプレート') %>
+    </table>
+  <% end %>
+<% end %>

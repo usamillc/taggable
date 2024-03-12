@@ -1,0 +1,20 @@
+<div class="modal fade" id="deleteTagModal-<%= merge_tag.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">タグの削除</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        このタグを削除します。よろしいですか？
+        <br>
+        （この操作を取り消す場合は右上の&times;をクリックしてください。）
+      </div>
+      <div class="modal-footer">
+        <%= link_to '削除', delete_merge_tag_path(merge_tag), method: :put, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>

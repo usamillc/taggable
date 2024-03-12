@@ -1,0 +1,20 @@
+<div class="modal fade" id="linkMergeModal-<%= category.id %>" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">リンクマージツールへのインポート</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        カテゴリ <b><%= category.screenname %>（<%= category.name %>）</b> から<b><%= render_async category_link_mergeable_count_path(category) %>件</b>のタスクをリンクツールへインポートします。よろしいですか？インポート完了までにはしばらく時間がかかります。
+        <br>
+        （この操作を取り消す場合は右上の&times;をクリックしてください。）
+      </div>
+      <div class="modal-footer">
+        <%= link_to 'インポート開始', enqueue_prepare_link_merge_path(category, show_hidden: show_hidden, page: page), class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>
